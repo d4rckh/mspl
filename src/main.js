@@ -21,8 +21,8 @@ module.exports = class Runner {
 
 const myProg = new module.exports(`
 func:MyFunction
-	print:"Hello World, in the "//"function"
-	call:MyFunction
+print:"Hello World, in the "//"function"
+call:MyFunction
 endf
 
 call:MyFunction

@@ -14,9 +14,9 @@ class Func extends Declaration {
 }
 
 module.exports = class Evaler { 
-	constructor(parsed) {
+	constructor(parsed, declarations=[]) {
 		this.instructions = parsed
-		this.declarations = []
+		this.declarations = [...declarations]
 		this.i = 0
 	}
 
@@ -36,7 +36,7 @@ module.exports = class Evaler {
 				this.declarations.forEach(declaration => {
 					if (declaration.type == "function") {
 						if (declaration.name == instruc.name) {
-							(new module.exports(declaration.instructions)).eval()
+							(new module.exports(declaration.instructions, this.declarations)).eval()
 						}
 					}
 				})

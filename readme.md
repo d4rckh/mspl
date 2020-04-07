@@ -9,7 +9,7 @@ Most stupid programming language
 ## Basic example
 ```
 func:MyFunction
-	print:"Hello World, in the "/"function"
+print:"Hello World, in the "/"function"
 endf
 
 print:"Hello World, outside the "/"function"
