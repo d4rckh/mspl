@@ -20,12 +20,13 @@ module.exports = class Runner {
 }
 
 const myProg = new module.exports(`
+var:WHATisIT "nested variable!"
+var: "I am "/%WHATisIT
+
 func:MyFunction
-print:"Hello World, in the "//"function"
-call:MyFunction
+	print:"Hello "/%WHATisIT
 endf
 
-call:MyFunction
-`.replace("\t", "").split("\n"))
+call:MyFunction@2`.replace("\n\t", "\n").replace("\t", "").split("\n"))
 
 myProg.run()

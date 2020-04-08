@@ -1,5 +1,12 @@
 const DELIM_BETWEEN_NAME_AND_ARGUMENTS = ":"
 
+class variableMention {
+	constructor(name) {
+		this.name = name
+		this.type = "VAR"
+	}
+}
+
 class Value {
 	constructor(input, type="COMBO", final=false) {
 		this.type = type
@@ -7,10 +14,13 @@ class Value {
 		this.raw = input
 		if (!final) { 
 				this.raw.split("/").forEach(p => {
-				if (p.startsWith("\"") && p[p.length - 1] == "\"") {
-					this.value.push(new Value(p.substring(1, p.length-1), "STRING", true))
-				}
-			})
+					if (p.startsWith("\"") && p[p.length - 1] == "\"") {
+						this.value.push(new Value(p.substring(1, p.length-1), "STRING", true))
+					}
+					if (p.startsWith("%")) {
+						this.value.push(new variableMention(p.slice(1)))
+					}
+				})
 		} else {
 			this.value = input
 		}
@@ -46,6 +56,14 @@ class call extends instruction {
 	}
 }
 
+class variable extends instruction {
+	constructor(args) {
+		super("variableDeclaration")
+		this.name = args.split(" ")[0]
+		this.value = new Value(args.split(" ").slice(1).join(" "), "COMBO", false)
+	}
+}
+
 module.exports = class Parser {
 	constructor(lines) {
 		this.input = lines
@@ -60,12 +78,16 @@ module.exports = class Parser {
 
 	parse() {
 		for (var i in this.input) {
-			const line = this.input[i]
+			var line = this.input[i]
+			var times = 1
+			if (line[line.length - 2] == "@") {
+				times = parseInt(line[line.length - 1])
+				line = line.substring(0, line.length - 2)	
+			}
 			const instruction = line.split(DELIM_BETWEEN_NAME_AND_ARGUMENTS)[0]
 			const args = line.split(DELIM_BETWEEN_NAME_AND_ARGUMENTS)[1]
 			
-			var times = 1
-			if (line[line.length - 2] == "@") times = parseInt(line[line.length - 1])
+
 			//if (line[line.length - 2] == "&") times = parseInt(line[line.length - 1])
 			var currentInstruction = null
 
@@ -79,6 +101,8 @@ module.exports = class Parser {
 				currentInstruction = new print(args)
 			} else if (instruction == "call") {
 				currentInstruction = new call(args)
+			} else if (instruction == "var") {
+				currentInstruction = new variable(args)
 			} else {
 				currentInstruction = instruction
 			} 
