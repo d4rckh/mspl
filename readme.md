@@ -1,4 +1,4 @@
-# wids
+# mspl
 
 Most stupid programming language
 
