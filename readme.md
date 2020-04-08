@@ -2,10 +2,6 @@
 
 Most stupid programming language
 
-## Features
-- Functions
-- Print
-
 ## Examples
 **Function**
 ```
