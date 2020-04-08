@@ -6,13 +6,29 @@ Most stupid programming language
 - Functions
 - Print
 
-## Basic example
+## Examples
+**Function**
 ```
 func:MyFunction
-print:"Hello World, in the "/"function"
+	print:"Hello World" 
 endf
 
-print:"Hello World, outside the "/"function"
+print:"Hello World x2"
 call:MyFunction
+```
+**Repeat Instruction with @**
+This will print "Hello World" 5 times
+```
+print:"Hello World"@5
+```
+**Variables**
+```
+var:MyFirstVariable "Hello!"
+print:%MyFirstVariable
+```
+**Combine variables with strings**
+```
+var:name "John Doe"
+print:"My name is "/%name
 ```
 ("/" concatenates)
